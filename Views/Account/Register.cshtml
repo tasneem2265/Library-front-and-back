@@ -1,1 +1,53 @@
-c
+@* Views/Account/Register.cshtml *@
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "إنشاء حساب";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card p-4" style="border-color: var(--gold); border-width: 2px;">
+            <h3 class="text-center mb-4" style="color: var(--wood-medium); font-family:'Cinzel',serif;">إنشاء حساب جديد</h3>
+
+            <form asp-action="Register" method="post">
+                <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">الاسم الكامل</label>
+                    <input asp-for="FullName" class="form-control" />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">البريد الإلكتروني</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">رقم الهاتف</label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">العنوان</label>
+                    <textarea asp-for="Address" class="form-control" rows="2"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">كلمة المرور</label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">تأكيد كلمة المرور</label>
+                    <input asp-for="ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-library btn-lg w-100">إنشاء الحساب</button>
+            </form>
+
+            <p class="text-center mt-3">
+                عندك حساب بالفعل؟ <a asp-action="Login">سجلي دخول</a>
+            </p>
+        </div>
+    </div>
+</div>
