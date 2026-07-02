@@ -1,1 +1,58 @@
-c
+@* Views/Home/Index.cshtml *@
+@model List<Book>
+@{
+    ViewData["Title"] = "الرئيسية";
+    var categories = ViewBag.Categories as List<Category>;
+}
+
+<section class="hero-section">
+    <h1>مكتبة الأصالة</h1>
+    <p class="lead">رحلة بين رفوف المعرفة... اكتشفي عالمًا من الكتب في مكان واحد</p>
+    <a asp-controller="Books" asp-action="Index" class="btn btn-library btn-lg mt-3">تصفحي الكتب</a>
+</section>
+
+<div class="container">
+    @* الأقسام *@
+    <div class="mb-4 text-center">
+        @foreach (var cat in categories)
+        {
+            <a asp-controller="Books" asp-action="Index" asp-route-categoryId="@cat.Id" class="category-pill text-decoration-none">
+                @cat.Name
+            </a>
+        }
+    </div>
+
+    <h2 class="mb-4" style="color: var(--wood-medium);">أحدث الإصدارات</h2>
+
+    <div class="row g-4">
+        @foreach (var book in Model)
+        {
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="book-card h-100">
+                    <a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">
+                        <img src="@(string.IsNullOrEmpty(book.CoverImageUrl) ? "/images/default-book.jpg" : book.CoverImageUrl)" alt="@book.Title" />
+                    </a>
+                    <div class="card-body">
+                        <h6 class="mb-1">
+                            <a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id" class="text-decoration-none" style="color: var(--text-dark);">
+                                @book.Title
+                            </a>
+                        </h6>
+                        <p class="text-muted small mb-2">@book.Author</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="price">@book.Price.ToString("0.##") ج.م</span>
+                            <a asp-controller="Cart" asp-action="Add" asp-route-bookId="@book.Id" class="btn btn-library btn-sm">
+                                <i class="bi bi-bag-plus"></i> أضف
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    @if (!Model.Any())
+    {
+        <p class="text-center text-muted py-5">لا توجد كتب متاحة حاليًا.</p>
+    }
+</div>
