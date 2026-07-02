@@ -1,1 +1,50 @@
-f
+@* Views/Books/Details.cshtml *@
+@model Book
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="book-card">
+            <img src="@(string.IsNullOrEmpty(Model.CoverImageUrl) ? "/images/default-book.jpg" : Model.CoverImageUrl)" 
+                 alt="@Model.Title" class="w-100" style="height: 420px; object-fit: cover;" />
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <h2 style="color: var(--wood-medium); font-family: 'Cinzel', serif;">@Model.Title</h2>
+        <p class="text-muted fs-5">بقلم: @Model.Author</p>
+
+        <div class="mb-3">
+            @foreach (var bc in Model.BookCategories)
+            {
+                <span class="category-pill">@bc.Category.Name</span>
+            }
+        </div>
+
+        <p class="fs-3 fw-bold" style="color: var(--wood-medium);">@Model.Price.ToString("0.##") ج.م</p>
+
+        @if (Model.StockQuantity > 0)
+        {
+            <p class="text-success"><i class="bi bi-check-circle"></i> متوفر (@Model.StockQuantity نسخة)</p>
+        }
+        else
+        {
+            <p class="text-danger"><i class="bi bi-x-circle"></i> غير متوفر حاليًا</p>
+        }
+
+        <form asp-controller="Cart" asp-action="Add" method="post" class="d-flex gap-2 align-items-center mt-3">
+            <input type="hidden" name="bookId" value="@Model.Id" />
+            <input type="number" name="quantity" value="1" min="1" max="@Model.StockQuantity" class="form-control" style="width: 90px;" />
+            <button type="submit" class="btn btn-library" @(Model.StockQuantity == 0 ? "disabled" : "")>
+                <i class="bi bi-bag-plus"></i> أضف للسلة
+            </button>
+        </form>
+
+        <hr class="my-4" style="border-color: var(--gold);" />
+
+        <h5 style="color: var(--wood-medium);">نبذة عن الكتاب</h5>
+        <p style="line-height: 1.9;">@Model.Description</p>
+    </div>
+</div>
