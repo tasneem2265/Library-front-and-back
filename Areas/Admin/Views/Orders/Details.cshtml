@@ -1,1 +1,52 @@
-c
+@* Areas/Admin/Views/Orders/Details.cshtml *@
+@model Order
+@{
+    ViewData["Title"] = $"طلب #{Model.Id}";
+    Layout = "_AdminLayout";
+}
+
+<h3 class="mb-4" style="color: var(--wood-medium); font-family:'Cinzel',serif;">تفاصيل الطلب #@Model.Id</h3>
+
+<div class="row g-4">
+    <div class="col-md-7">
+        <table class="table bg-white">
+            <thead style="background: var(--wood-medium); color: var(--cream);">
+                <tr><th>الكتاب</th><th>الكمية</th><th>السعر وقت الطلب</th><th>الإجمالي</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderItems)
+                {
+                    <tr>
+                        <td>@item.Book.Title</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.UnitPrice.ToString("0.##") ج.م</td>
+                        <td>@((item.UnitPrice * item.Quantity).ToString("0.##")) ج.م</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-5">
+        <div class="card p-4" style="background: var(--parchment);">
+            <p><strong>العميل:</strong> @Model.ApplicationUser?.FullName</p>
+            <p><strong>الهاتف:</strong> @Model.PhoneNumber</p>
+            <p><strong>عنوان الشحن:</strong> @Model.ShippingAddress</p>
+            <p><strong>الإجمالي:</strong> @Model.TotalAmount.ToString("0.##") ج.م</p>
+
+            <hr style="border-color: var(--gold);" />
+
+            <form asp-action="UpdateStatus" method="post">
+                <input type="hidden" name="orderId" value="@Model.Id" />
+                <label class="form-label fw-bold">تغيير حالة الطلب</label>
+                <select name="status" class="form-select mb-3">
+                    <option value="0" selected="@(Model.Status == OrderStatus.Pending)">قيد التجهيز</option>
+                    <option value="1" selected="@(Model.Status == OrderStatus.Shipped)">تم الشحن</option>
+                    <option value="2" selected="@(Model.Status == OrderStatus.Delivered)">تم التسليم</option>
+                    <option value="3" selected="@(Model.Status == OrderStatus.Cancelled)">ملغي</option>
+                </select>
+                <button type="submit" class="btn btn-library w-100">تحديث الحالة</button>
+            </form>
+        </div>
+    </div>
+</div>
