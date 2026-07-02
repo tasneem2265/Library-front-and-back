@@ -1,1 +1,21 @@
-c
+@model Category
+@{
+    ViewData["Title"] = "تعديل قسم";
+    Layout = "_AdminLayout";
+}
+
+<h3 class="mb-4" style="color: var(--wood-medium); font-family:'Cinzel',serif;">تعديل القسم</h3>
+
+<form asp-action="Edit" method="post" class="card p-4">
+    <input asp-for="Id" type="hidden" />
+    <div class="mb-3">
+        <label class="form-label fw-bold">اسم القسم</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label fw-bold">الوصف</label>
+        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-library btn-lg">حفظ</button>
+</form>
