@@ -1,1 +1,46 @@
-f
+@* Views/Orders/Checkout.cshtml *@
+@model CheckoutViewModel
+@{
+    ViewData["Title"] = "إتمام الطلب";
+}
+
+<h2 class="mb-4" style="color: var(--wood-medium); font-family: 'Cinzel', serif;">إتمام الطلب</h2>
+
+<div class="row g-4">
+    <div class="col-md-7">
+        <form asp-action="PlaceOrder" method="post">
+            <div class="card p-4" style="border-color: var(--gold); border-width: 2px;">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">عنوان الشحن</label>
+                    <textarea asp-for="ShippingAddress" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="ShippingAddress" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">رقم الهاتف</label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-library btn-lg">تأكيد الطلب</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-5">
+        <div class="card p-4" style="background: var(--parchment);">
+            <h5 style="color: var(--wood-medium);">ملخص الطلب</h5>
+            <hr style="border-color: var(--gold);" />
+            @foreach (var item in Model.CartItems)
+            {
+                <div class="d-flex justify-content-between mb-2">
+                    <span>@item.Book.Title × @item.Quantity</span>
+                    <span>@((item.Book.Price * item.Quantity).ToString("0.##")) ج.م</span>
+                </div>
+            }
+            <hr style="border-color: var(--gold);" />
+            <div class="d-flex justify-content-between fs-5 fw-bold">
+                <span>الإجمالي</span>
+                <span>@Model.Total.ToString("0.##") ج.م</span>
+            </div>
+        </div>
+    </div>
+</div>
