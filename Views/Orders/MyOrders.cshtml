@@ -1,1 +1,50 @@
-d
+@* Views/Orders/MyOrders.cshtml *@
+@model List<Order>
+@{
+    ViewData["Title"] = "طلباتي";
+
+    string StatusLabel(OrderStatus s) => s switch
+    {
+        OrderStatus.Pending => "قيد التجهيز",
+        OrderStatus.Shipped => "تم الشحن",
+        OrderStatus.Delivered => "تم التسليم",
+        OrderStatus.Cancelled => "ملغي",
+        _ => ""
+    };
+
+    string StatusColor(OrderStatus s) => s switch
+    {
+        OrderStatus.Pending => "warning",
+        OrderStatus.Shipped => "info",
+        OrderStatus.Delivered => "success",
+        OrderStatus.Cancelled => "danger",
+        _ => "secondary"
+    };
+}
+
+<h2 class="mb-4" style="color: var(--wood-medium); font-family: 'Cinzel', serif;">طلباتي</h2>
+
+@if (!Model.Any())
+{
+    <p class="text-muted text-center py-5">لا توجد طلبات سابقة.</p>
+}
+else
+{
+    @foreach (var order in Model)
+    {
+        <div class="card mb-3 p-3" style="border-color: var(--gold);">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div>
+                    <strong>طلب رقم #@order.Id</strong>
+                    <span class="text-muted ms-2">@order.OrderDate.ToString("dd/MM/yyyy")</span>
+                </div>
+                <span class="badge bg-@StatusColor(order.Status) fs-6">@StatusLabel(order.Status)</span>
+            </div>
+            <hr />
+            <div class="d-flex justify-content-between align-items-center">
+                <span>@order.OrderItems.Count عنصر — الإجمالي: @order.TotalAmount.ToString("0.##") ج.م</span>
+                <a asp-action="Details" asp-route-id="@order.Id" class="btn btn-sm btn-library">التفاصيل</a>
+            </div>
+        </div>
+    }
+}
