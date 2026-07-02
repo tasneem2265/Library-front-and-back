@@ -1,1 +1,145 @@
-g
+:root {
+    --wood-dark: #2b1a0f;
+    --wood-medium: #4a2f1c;
+    --wood-light: #6b4423;
+    --gold: #c9a24b;
+    --gold-light: #e8c877;
+    --cream: #f5ecd9;
+    --parchment: #ede0c8;
+    --text-dark: #2b1a0f;
+    --shadow-warm: rgba(43, 26, 15, 0.35);
+}
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+}
+
+h1, h2, h3, h4, h5, .library-brand {
+    font-family: 'Cinzel', serif;
+}
+
+/* Navbar */
+.library-navbar {
+    background: linear-gradient(180deg, var(--wood-dark) 0%, var(--wood-medium) 100%);
+    box-shadow: 0 4px 12px var(--shadow-warm);
+    padding: 1rem 0;
+    border-bottom: 3px solid var(--gold);
+}
+
+.library-brand {
+    color: var(--gold-light) !important;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.library-navbar .nav-link {
+    color: var(--parchment) !important;
+    font-weight: 500;
+    transition: color 0.25s;
+    margin: 0 0.4rem;
+}
+
+.library-navbar .nav-link:hover {
+    color: var(--gold-light) !important;
+}
+
+/* Cards for books */
+.book-card {
+    background: #fff;
+    border: 1px solid #e0d4b8;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px var(--shadow-warm);
+    transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.book-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px var(--shadow-warm);
+}
+
+.book-card img {
+    height: 280px;
+    object-fit: cover;
+    width: 100%;
+    border-bottom: 3px solid var(--gold);
+}
+
+.book-card .card-body {
+    padding: 1rem;
+}
+
+.book-card .price {
+    color: var(--wood-medium);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+/* Buttons */
+.btn-library {
+    background: linear-gradient(180deg, var(--gold) 0%, #a5793a 100%);
+    color: var(--wood-dark);
+    font-weight: 700;
+    border: none;
+    padding: 0.55rem 1.4rem;
+    border-radius: 4px;
+    transition: all 0.25s;
+}
+
+.btn-library:hover {
+    background: var(--gold-light);
+    color: var(--wood-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--shadow-warm);
+}
+
+/* Hero section */
+.hero-section {
+    background: linear-gradient(rgba(43,26,15,0.75), rgba(43,26,15,0.75)), url('/images/library-hero.jpg') center/cover no-repeat;
+    color: var(--parchment);
+    padding: 6rem 1rem;
+    text-align: center;
+    border-radius: 0 0 20px 20px;
+    margin-bottom: 2rem;
+}
+
+.hero-section h1 {
+    color: var(--gold-light);
+    font-size: 2.6rem;
+    margin-bottom: 1rem;
+}
+
+/* Category pills */
+.category-pill {
+    background: var(--wood-medium);
+    color: var(--cream);
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin: 0.2rem;
+    transition: 0.25s;
+}
+
+.category-pill:hover, .category-pill.active {
+    background: var(--gold);
+    color: var(--wood-dark);
+}
+
+/* Footer */
+.library-footer {
+    background: var(--wood-dark);
+    color: var(--parchment);
+    text-align: center;
+    padding: 1.5rem 0;
+    margin-top: 3rem;
+    border-top: 3px solid var(--gold);
+}
+
+.main-content {
+    min-height: 70vh;
+    padding-top: 2rem;
+}
