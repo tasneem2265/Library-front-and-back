@@ -1,1 +1,52 @@
-r
+@* Areas/Admin/Views/Dashboard/Index.cshtml *@
+@{
+    ViewData["Title"] = "لوحة التحكم";
+    Layout = "_AdminLayout";
+}
+
+<h3 class="mb-4" style="color: var(--wood-medium); font-family:'Cinzel',serif;">مرحبًا بكِ في لوحة التحكم</h3>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="card p-3 text-center" style="border-color: var(--gold); border-width:2px;">
+            <h6 class="text-muted">إجمالي الكتب</h6>
+            <h3 style="color: var(--wood-medium);">@ViewBag.TotalBooks</h3>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card p-3 text-center" style="border-color: var(--gold); border-width:2px;">
+            <h6 class="text-muted">إجمالي الطلبات</h6>
+            <h3 style="color: var(--wood-medium);">@ViewBag.TotalOrders</h3>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card p-3 text-center" style="border-color: var(--gold); border-width:2px;">
+            <h6 class="text-muted">طلبات قيد التجهيز</h6>
+            <h3 class="text-warning">@ViewBag.PendingOrders</h3>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card p-3 text-center" style="border-color: var(--gold); border-width:2px;">
+            <h6 class="text-muted">عدد العملاء</h6>
+            <h3 style="color: var(--wood-medium);">@ViewBag.TotalCustomers</h3>
+        </div>
+    </div>
+</div>
+
+<h5 style="color: var(--wood-medium);">آخر الطلبات</h5>
+<table class="table bg-white">
+    <thead style="background: var(--wood-medium); color: var(--cream);">
+        <tr><th>رقم الطلب</th><th>العميل</th><th>التاريخ</th><th>الإجمالي</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var order in ViewBag.RecentOrders as List<Order>)
+        {
+            <tr>
+                <td>#@order.Id</td>
+                <td>@order.ApplicationUser?.FullName</td>
+                <td>@order.OrderDate.ToString("dd/MM/yyyy")</td>
+                <td>@order.TotalAmount.ToString("0.##") ج.م</td>
+            </tr>
+        }
+    </tbody>
+</table>
