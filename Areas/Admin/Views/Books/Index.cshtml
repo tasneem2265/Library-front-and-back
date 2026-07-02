@@ -1,1 +1,55 @@
-v
+@* Areas/Admin/Views/Books/Index.cshtml *@
+@model List<Book>
+@{
+    ViewData["Title"] = "إدارة الكتب";
+    Layout = "_AdminLayout";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 style="color: var(--wood-medium); font-family:'Cinzel',serif;">إدارة الكتب</h3>
+    <a asp-action="Create" class="btn btn-library"><i class="bi bi-plus-lg"></i> إضافة كتاب</a>
+</div>
+
+<table class="table bg-white">
+    <thead style="background: var(--wood-medium); color: var(--cream);">
+        <tr>
+            <th>الصورة</th>
+            <th>العنوان</th>
+            <th>المؤلف</th>
+            <th>السعر</th>
+            <th>المخزون</th>
+            <th>الأقسام</th>
+            <th>الحالة</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td><img src="@(string.IsNullOrEmpty(book.CoverImageUrl) ? "/images/default-book.jpg" : book.CoverImageUrl)" style="width:45px;height:60px;object-fit:cover;" /></td>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.Price.ToString("0.##") ج.م</td>
+                <td>@book.StockQuantity</td>
+                <td>@string.Join("، ", book.BookCategories.Select(bc => bc.Category.Name))</td>
+                <td>
+                    @if (book.IsAvailable)
+                    {
+                        <span class="badge bg-success">متاح</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">غير متاح</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@book.Id" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>
+                    <form asp-action="Delete" asp-route-id="@book.Id" method="post" class="d-inline" onsubmit="return confirm('متأكدة من الحذف؟');">
+                        <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
