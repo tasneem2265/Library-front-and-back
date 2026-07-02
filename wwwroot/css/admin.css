@@ -1,1 +1,25 @@
-c
+/* wwwroot/css/admin.css */
+.admin-wrapper { display: flex; min-height: 100vh; }
+
+.admin-sidebar {
+    width: 240px;
+    background: linear-gradient(180deg, var(--wood-dark), var(--wood-medium));
+    flex-shrink: 0;
+}
+
+.admin-sidebar .nav-link {
+    color: var(--parchment);
+    padding: 0.75rem 1.5rem;
+    transition: 0.2s;
+}
+
+.admin-sidebar .nav-link:hover {
+    background: rgba(201, 162, 75, 0.15);
+    color: var(--gold-light);
+}
+
+.admin-content {
+    flex: 1;
+    padding: 2rem;
+    background: var(--cream);
+}
