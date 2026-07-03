@@ -1,1 +1,38 @@
-y
+@model Order
+@{
+    ViewData["Title"] = $"طلب #{Model.Id}";
+
+    string StatusLabel(OrderStatus s) => s switch
+    {
+        OrderStatus.Pending => "قيد التجهيز",
+        OrderStatus.Shipped => "تم الشحن",
+        OrderStatus.Delivered => "تم التسليم",
+        OrderStatus.Cancelled => "ملغي",
+        _ => ""
+    };
+}
+
+<h2 class="mb-4" style="color: var(--wood-medium); font-family: 'Cinzel', serif;">تفاصيل الطلب #@Model.Id</h2>
+
+<p><strong>الحالة الحالية:</strong> @StatusLabel(Model.Status)</p>
+<p><strong>عنوان الشحن:</strong> @Model.ShippingAddress</p>
+<p><strong>رقم الهاتف:</strong> @Model.PhoneNumber</p>
+
+<table class="table bg-white mt-3">
+    <thead style="background: var(--wood-medium); color: var(--cream);">
+        <tr><th>الكتاب</th><th>الكمية</th><th>السعر</th><th>الإجمالي</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderItems)
+        {
+            <tr>
+                <td>@item.Book.Title</td>
+                <td>@item.Quantity</td>
+                <td>@item.UnitPrice.ToString("0.##") ج.م</td>
+                <td>@((item.UnitPrice * item.Quantity).ToString("0.##")) ج.م</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h5 class="text-end" style="color: var(--wood-medium);">الإجمالي الكلي: @Model.TotalAmount.ToString("0.##") ج.م</h5>
